@@ -1,3 +1,6 @@
+**NOTE: This is my personal implementation of assignment2. Please do not copy 
+        my code outright. You probably won't learn much that way.**
+
 Building assignment 2 on Mac OS is a little bit more involved than the previous
 two assignments. You'll need to install a copy of [FLTK](http://www.fltk.org/).
 I suggest using [Homebrew](http://mxcl.github.com/homebrew/) for this. Once
