@@ -1,0 +1,3 @@
+[submodule "vecmath"]
+	path = vecmath
+	url = https://github.com/sherbondy/vecmath
