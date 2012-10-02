@@ -14,7 +14,7 @@ public:
 	void pop();
 
 private:
-
+    void add_identity();
 	std::vector< Matrix4f > m_matrices;
 
 };
