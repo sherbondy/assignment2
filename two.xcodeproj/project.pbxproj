@@ -6,6 +6,49 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		3E310EF0161B950A0030A1B9 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E310EED161B94D10030A1B9 /* Carbon.framework */; };
+		3E310EF1161B950A0030A1B9 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E310EEB161B94CD0030A1B9 /* GLUT.framework */; };
+		3E310EF2161B950A0030A1B9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E310EE9161B94C80030A1B9 /* Cocoa.framework */; };
+		3E310EF3161B950A0030A1B9 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E310EE7161B94BC0030A1B9 /* OpenGL.framework */; };
+		3E310EF4161B950A0030A1B9 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E310EE5161B94B70030A1B9 /* AGL.framework */; };
+		3E310EF5161B951C0030A1B9 /* bitmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E310EA8161B93920030A1B9 /* bitmap.cpp */; };
+		3E310EF6161B951C0030A1B9 /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E310EAA161B93920030A1B9 /* camera.cpp */; };
+		3E310EF7161B951C0030A1B9 /* Joint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E310EB9161B93920030A1B9 /* Joint.cpp */; };
+		3E310EF8161B951C0030A1B9 /* MatrixStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E310EBD161B93920030A1B9 /* MatrixStack.cpp */; };
+		3E310EF9161B951C0030A1B9 /* modelerapp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E310EC1161B93920030A1B9 /* modelerapp.cpp */; };
+		3E310EFA161B951C0030A1B9 /* modelerui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E310EC3161B93920030A1B9 /* modelerui.cpp */; };
+		3E310EFB161B951C0030A1B9 /* ModelerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E310EC5161B93920030A1B9 /* ModelerView.cpp */; };
+		3E310EFC161B951C0030A1B9 /* SkeletalModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E310EC8161B93920030A1B9 /* SkeletalModel.cpp */; };
+		3E310F33161B96320030A1B9 /* libfltk_gl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E310F31161B96320030A1B9 /* libfltk_gl.a */; };
+		3E310F34161B96320030A1B9 /* libfltk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E310F32161B96320030A1B9 /* libfltk.a */; };
+		3EFE0791161BA7300025548D /* libvecmath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EFE0790161BA7300025548D /* libvecmath.a */; };
+		3EFE0792161BA7B90025548D /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E310EBF161B93920030A1B9 /* Mesh.cpp */; };
+		3EFE0793161BA7CC0025548D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E310EBB161B93920030A1B9 /* main.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3E310EE3161B94A80030A1B9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E310ED0161B93D30030A1B9 /* vecmath.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3EE40C6E160D01EC00531768;
+			remoteInfo = vecmath;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3E310EDA161B947C0030A1B9 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		3E310EA8161B93920030A1B9 /* bitmap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bitmap.cpp; sourceTree = "<group>"; };
 		3E310EA9161B93920030A1B9 /* bitmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitmap.h; sourceTree = "<group>"; };
@@ -42,7 +85,34 @@
 		3E310EC9161B93920030A1B9 /* SkeletalModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkeletalModel.h; sourceTree = "<group>"; };
 		3E310ECA161B93920030A1B9 /* tuple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tuple.h; sourceTree = "<group>"; };
 		3E310ED0161B93D30030A1B9 /* vecmath.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = vecmath.xcodeproj; path = vecmath/vecmath.xcodeproj; sourceTree = "<group>"; };
+		3E310EDC161B947C0030A1B9 /* a2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = a2; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E310EE5161B94B70030A1B9 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = System/Library/Frameworks/AGL.framework; sourceTree = SDKROOT; };
+		3E310EE7161B94BC0030A1B9 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		3E310EE9161B94C80030A1B9 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		3E310EEB161B94CD0030A1B9 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		3E310EED161B94D10030A1B9 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		3E310F31161B96320030A1B9 /* libfltk_gl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfltk_gl.a; path = /usr/local/Cellar/fltk/1.3.0/lib/libfltk_gl.a; sourceTree = "<absolute>"; };
+		3E310F32161B96320030A1B9 /* libfltk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfltk.a; path = /usr/local/Cellar/fltk/1.3.0/lib/libfltk.a; sourceTree = "<absolute>"; };
+		3EFE0790161BA7300025548D /* libvecmath.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvecmath.a; path = vecmath/lib/libvecmath.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3E310ED9161B947C0030A1B9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E310F33161B96320030A1B9 /* libfltk_gl.a in Frameworks */,
+				3E310F34161B96320030A1B9 /* libfltk.a in Frameworks */,
+				3EFE0791161BA7300025548D /* libvecmath.a in Frameworks */,
+				3E310EF0161B950A0030A1B9 /* Carbon.framework in Frameworks */,
+				3E310EF1161B950A0030A1B9 /* GLUT.framework in Frameworks */,
+				3E310EF2161B950A0030A1B9 /* Cocoa.framework in Frameworks */,
+				3E310EF3161B950A0030A1B9 /* OpenGL.framework in Frameworks */,
+				3E310EF4161B950A0030A1B9 /* AGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		3E310E79161B93520030A1B9 = {
@@ -71,7 +141,10 @@
 				3E310EC8161B93920030A1B9 /* SkeletalModel.cpp */,
 				3E310EC9161B93920030A1B9 /* SkeletalModel.h */,
 				3E310ECA161B93920030A1B9 /* tuple.h */,
+				3E310EEF161B94FD0030A1B9 /* frameworks */,
 				3E310ED0161B93D30030A1B9 /* vecmath.xcodeproj */,
+				3E310EDF161B947C0030A1B9 /* a2 */,
+				3E310EDD161B947C0030A1B9 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,7 +174,47 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		3E310EDD161B947C0030A1B9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3E310EDC161B947C0030A1B9 /* a2 */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3E310EDF161B947C0030A1B9 /* a2 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = a2;
+			sourceTree = "<group>";
+		};
+		3E310EEF161B94FD0030A1B9 /* frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3EFE0790161BA7300025548D /* libvecmath.a */,
+				3E310F31161B96320030A1B9 /* libfltk_gl.a */,
+				3E310F32161B96320030A1B9 /* libfltk.a */,
+				3E310EED161B94D10030A1B9 /* Carbon.framework */,
+				3E310EEB161B94CD0030A1B9 /* GLUT.framework */,
+				3E310EE9161B94C80030A1B9 /* Cocoa.framework */,
+				3E310EE7161B94BC0030A1B9 /* OpenGL.framework */,
+				3E310EE5161B94B70030A1B9 /* AGL.framework */,
+			);
+			name = frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		3E310EFD161B954E0030A1B9 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXLegacyTarget section */
 		3E310E80161B93520030A1B9 /* two */ = {
@@ -119,6 +232,28 @@
 		};
 /* End PBXLegacyTarget section */
 
+/* Begin PBXNativeTarget section */
+		3E310EDB161B947C0030A1B9 /* a2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3E310EE0161B947C0030A1B9 /* Build configuration list for PBXNativeTarget "a2" */;
+			buildPhases = (
+				3E310EFD161B954E0030A1B9 /* Headers */,
+				3E310ED8161B947C0030A1B9 /* Sources */,
+				3E310ED9161B947C0030A1B9 /* Frameworks */,
+				3E310EDA161B947C0030A1B9 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3E310EE4161B94A80030A1B9 /* PBXTargetDependency */,
+			);
+			name = a2;
+			productName = a2;
+			productReference = 3E310EDC161B947C0030A1B9 /* a2 */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
 /* Begin PBXProject section */
 		3E310E7B161B93520030A1B9 /* Project object */ = {
 			isa = PBXProject;
@@ -134,6 +269,7 @@
 				en,
 			);
 			mainGroup = 3E310E79161B93520030A1B9;
+			productRefGroup = 3E310EDD161B947C0030A1B9 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
 				{
@@ -144,9 +280,38 @@
 			projectRoot = "";
 			targets = (
 				3E310E80161B93520030A1B9 /* two */,
+				3E310EDB161B947C0030A1B9 /* a2 */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3E310ED8161B947C0030A1B9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E310EF5161B951C0030A1B9 /* bitmap.cpp in Sources */,
+				3E310EF6161B951C0030A1B9 /* camera.cpp in Sources */,
+				3E310EF7161B951C0030A1B9 /* Joint.cpp in Sources */,
+				3EFE0793161BA7CC0025548D /* main.cpp in Sources */,
+				3E310EF8161B951C0030A1B9 /* MatrixStack.cpp in Sources */,
+				3EFE0792161BA7B90025548D /* Mesh.cpp in Sources */,
+				3E310EF9161B951C0030A1B9 /* modelerapp.cpp in Sources */,
+				3E310EFA161B951C0030A1B9 /* modelerui.cpp in Sources */,
+				3E310EFB161B951C0030A1B9 /* ModelerView.cpp in Sources */,
+				3E310EFC161B951C0030A1B9 /* SkeletalModel.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3E310EE4161B94A80030A1B9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = vecmath;
+			targetProxy = 3E310EE3161B94A80030A1B9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		3E310E81161B93520030A1B9 /* Debug */ = {
@@ -221,6 +386,50 @@
 			};
 			name = Release;
 		};
+		3E310EE1161B947C0030A1B9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/Cellar/fltk/1.3.0/include,
+					"\"$(BUILT_PRODUCTS_DIR)\"/**",
+					"\"$(SRCROOT)/vecmath/include\"",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/lib,
+					"\"$(SRCROOT)/vecmath/lib\"",
+				);
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Debug;
+		};
+		3E310EE2161B947C0030A1B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/Cellar/fltk/1.3.0/include,
+					"\"$(BUILT_PRODUCTS_DIR)\"/**",
+					"\"$(SRCROOT)/vecmath/include\"",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/lib,
+					"\"$(SRCROOT)/vecmath/lib\"",
+				);
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -238,6 +447,15 @@
 			buildConfigurations = (
 				3E310E84161B93520030A1B9 /* Debug */,
 				3E310E85161B93520030A1B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3E310EE0161B947C0030A1B9 /* Build configuration list for PBXNativeTarget "a2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3E310EE1161B947C0030A1B9 /* Debug */,
+				3E310EE2161B947C0030A1B9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
