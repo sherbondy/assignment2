@@ -136,6 +136,10 @@ void SkeletalModel::drawSkeleton( )
 void SkeletalModel::setJointTransform(int jointIndex, float rX, float rY, float rZ)
 {
 	// Set the rotation part of the joint's transformation matrix based on the passed in Euler angles.
+    Matrix4f *transform = &m_joints[jointIndex]->transform;
+    transform->rotateX(rX);
+    transform->rotateY(rY);
+    transform->rotateZ(rZ);    
 }
 
 
