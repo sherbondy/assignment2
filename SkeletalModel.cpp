@@ -9,7 +9,7 @@ void SkeletalModel::load(const char *skeletonFile, const char *meshFile, const c
 	loadSkeleton(skeletonFile);
 
 	m_mesh.load(meshFile);
-	m_mesh.loadAttachments(attachmentsFile, m_joints.size());
+	m_mesh.loadAttachments(attachmentsFile, (int)m_joints.size());
 
 	computeBindWorldToJointTransforms();
 	updateCurrentJointToWorldTransforms();
@@ -42,6 +42,36 @@ void SkeletalModel::draw(Matrix4f cameraMatrix, bool skeletonVisible)
 void SkeletalModel::loadSkeleton( const char* filename )
 {
 	// Load the skeleton from file here.
+    ifstream skelefile(filename);
+    string line;
+    
+    if (skelefile.is_open()){
+        while (skelefile.good()) {
+            getline(skelefile, line);
+            stringstream ss(line);
+            
+            float dx, dy, dz;
+            int parent;
+            ss >> dx >> dy >> dz >> parent;
+            
+            Joint *joint = new Joint();
+            Matrix4f translation = Matrix4f::identity();
+            Vector4f trans_vector = Vector4f(dx, dy, dz, 1.0);
+            translation.setCol(3, trans_vector);
+            joint->transform = translation;
+            
+            m_joints.push_back(joint);
+            if (parent == -1){
+                m_rootJoint = joint;
+            } else {
+                m_joints[parent]->children.push_back(joint);
+            }
+        }
+        
+        skelefile.close();
+    } else {        
+        cout << "Unable to open file " << filename;
+    }
 }
 
 void SkeletalModel::drawJoints( )
