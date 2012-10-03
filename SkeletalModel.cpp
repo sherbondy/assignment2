@@ -49,22 +49,25 @@ void SkeletalModel::loadSkeleton( const char* filename )
     if (skelefile.is_open()){
         while (skelefile.good()) {
             getline(skelefile, line);
-            stringstream ss(line);
             
-            float dx, dy, dz;
-            int parent;
-            ss >> dx >> dy >> dz >> parent;
-            
-            Joint *joint = new Joint();
-            Matrix4f translation = Matrix4f::translation(dx, dy, dz);
-            joint->transform = translation;
-            
-            m_joints.push_back(joint);
-            prev_joint_transforms.push_back(Matrix4f::identity());
-            if (parent == -1){
-                m_rootJoint = joint;
-            } else {
-                m_joints[parent]->children.push_back(joint);
+            if (!line.empty()) {
+                stringstream ss(line);
+                
+                float dx, dy, dz;
+                int parent;
+                ss >> dx >> dy >> dz >> parent;
+                
+                Joint *joint = new Joint();
+                Matrix4f translation = Matrix4f::translation(dx, dy, dz);
+                joint->transform = translation;
+                
+                m_joints.push_back(joint);
+                prev_joint_transforms.push_back(Matrix4f::identity());
+                if (parent == -1){
+                    m_rootJoint = joint;
+                } else {
+                    m_joints[parent]->children.push_back(joint);
+                }
             }
         }
 
