@@ -31,7 +31,8 @@ void SkeletalModel::draw(Matrix4f cameraMatrix, bool skeletonVisible)
 	}
 	else
 	{
-		// Clear out any weird matrix we may have been using for drawing the bones and revert to the camera matrix.
+		// Clear out any weird matrix we may have been using for drawing
+        // the bones and revert to the camera matrix.
 		glLoadMatrixf(m_matrixStack.top());
 
 		// Tell the mesh to draw itself.
@@ -128,7 +129,8 @@ void SkeletalModel::drawChildBones(Joint *joint)
 
 void SkeletalModel::drawSkeleton( )
 {
-	// Draw boxes between the joints. You will need to add a recursive helper function to traverse the joint hierarchy.
+	// Draw boxes between the joints. You will need to add a recursive helper
+    // function to traverse the joint hierarchy.
     this->drawChildBones(m_rootJoint);
 }
 
