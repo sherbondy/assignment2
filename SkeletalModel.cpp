@@ -95,7 +95,6 @@ void SkeletalModel::drawJoints( )
 void SkeletalModel::drawChildBones(Joint *joint)
 {
     m_matrixStack.push(joint->transform);
-    Vector3f joint_pos = joint->transform.getCol(3).xyz();
     
     for (int i = 0; i < joint->children.size(); ++i){
         Joint *child = joint->children[i];
@@ -106,10 +105,9 @@ void SkeletalModel::drawChildBones(Joint *joint)
         Matrix4f translate = Matrix4f::translation(0, 0, 0.5); // translate up 0.5;
         Matrix4f scale     = Matrix4f::scaling(0.05, 0.05, child_distance);
         
-        Vector3f parent_offset = (child_offset - joint_pos);
-        Vector3f rotateZ   = parent_offset.normalized();
-        Vector3f rotateY   = Vector3f::cross(rotateZ, Vector3f::RIGHT);
-        Vector3f rotateX   = Vector3f::cross(rotateY, rotateZ);
+        Vector3f rotateZ   = child_offset.normalized();
+        Vector3f rotateY   = Vector3f::cross(rotateZ, Vector3f::RIGHT).normalized();
+        Vector3f rotateX   = Vector3f::cross(rotateY, rotateZ).normalized();
         Matrix4f rotate    = Matrix4f(Vector4f(rotateX, 0),
                                       Vector4f(rotateY, 0),
                                       Vector4f(rotateZ, 0),
@@ -124,6 +122,7 @@ void SkeletalModel::drawChildBones(Joint *joint)
         
         this->drawChildBones(child);
     }
+    
     m_matrixStack.pop();
 }
 
