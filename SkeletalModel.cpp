@@ -94,37 +94,37 @@ void SkeletalModel::drawJoints( )
 
 void SkeletalModel::drawChildBones(Joint *joint)
 {
-//    m_matrixStack.push(joint->transform);
-//    Vector3f joint_pos = joint->transform.getCol(3).xyz();
-//    
-//    for (int i = 0; i < joint->children.size(); ++i){
-//        Joint *child = joint->children[i];
-//        Vector3f child_offset = child->transform.getCol(3).xyz();
-//        float child_distance = child_offset.abs();
-//        
-//        // push cube transformations
-//        Matrix4f translate = Matrix4f::translation(0, 0, 0.5); // translate up 0.5;
-//        Matrix4f scale     = Matrix4f::scaling(0.05, 0.05, child_distance);
-//        
-//        Vector3f parent_offset = (joint_pos - child_offset);
-//        Vector3f rotateZ   = parent_offset.normalized();
-//        Vector3f rotateY   = Vector3f::cross(rotateZ, Vector3f::RIGHT);
-//        Vector3f rotateX   = Vector3f::cross(rotateY, rotateZ);
-//        Matrix4f rotate    = Matrix4f(Vector4f(rotateX, 0),
-//                                      Vector4f(rotateY, 0),
-//                                      Vector4f(rotateZ, 0),
-//                                      Vector4f(0, 0, 0, 1));
-//        
-//        Matrix4f transformations = rotate * scale * translate;
-//        
-//        m_matrixStack.push(transformations);
-//        glLoadMatrixf(m_matrixStack.top());
-//        glutSolidCube(1.0f);
-//        m_matrixStack.pop();
-//        
-//        this->drawChildBones(child);
-//    }
-//    m_matrixStack.pop();
+    m_matrixStack.push(joint->transform);
+    Vector3f joint_pos = joint->transform.getCol(3).xyz();
+    
+    for (int i = 0; i < joint->children.size(); ++i){
+        Joint *child = joint->children[i];
+        Vector3f child_offset = child->transform.getCol(3).xyz();
+        float child_distance = child_offset.abs();
+        
+        // push cube transformations
+        Matrix4f translate = Matrix4f::translation(0, 0, 0.5); // translate up 0.5;
+        Matrix4f scale     = Matrix4f::scaling(0.05, 0.05, child_distance);
+        
+        Vector3f parent_offset = (child_offset - joint_pos);
+        Vector3f rotateZ   = parent_offset.normalized();
+        Vector3f rotateY   = Vector3f::cross(rotateZ, Vector3f::RIGHT);
+        Vector3f rotateX   = Vector3f::cross(rotateY, rotateZ);
+        Matrix4f rotate    = Matrix4f(Vector4f(rotateX, 0),
+                                      Vector4f(rotateY, 0),
+                                      Vector4f(rotateZ, 0),
+                                      Vector4f(0, 0, 0, 1));
+        
+        Matrix4f transformations = rotate * scale * translate;
+        
+        m_matrixStack.push(transformations);
+        glLoadMatrixf(m_matrixStack.top());
+        glutSolidCube(1.0f);
+        m_matrixStack.pop();
+        
+        this->drawChildBones(child);
+    }
+    m_matrixStack.pop();
 }
 
 void SkeletalModel::drawSkeleton( )
