@@ -72,6 +72,8 @@ public:
 	void updateMesh();
 
 private:
+    
+    void drawChildJoints(Joint *joint);
 
 	// pointer to the root joint
 	Joint* m_rootJoint;

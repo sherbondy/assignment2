@@ -67,11 +67,25 @@ void SkeletalModel::loadSkeleton( const char* filename )
                 m_joints[parent]->children.push_back(joint);
             }
         }
-        
+
         skelefile.close();
     } else {        
         cout << "Unable to open file " << filename;
     }
+}
+
+/* Recursively draws the child joints of joint */
+void SkeletalModel::drawChildJoints(Joint *joint){
+    m_matrixStack.push(joint->transform);
+    glLoadMatrixf(m_matrixStack.top());
+    glutSolidSphere(0.025f, 12, 12);
+    
+    for (int i = 0; i < joint->children.size(); ++i){
+        Joint *child = joint->children[i];
+        this->drawChildJoints(child);
+    }
+    
+    m_matrixStack.pop();
 }
 
 void SkeletalModel::drawJoints( )
@@ -85,6 +99,8 @@ void SkeletalModel::drawJoints( )
 	// (glPushMatrix, glPopMatrix, glMultMatrix).
 	// You should use your MatrixStack class
 	// and use glLoadMatrix() before your drawing call.
+    
+    this->drawChildJoints(m_rootJoint);
 }
 
 void SkeletalModel::drawSkeleton( )
