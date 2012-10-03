@@ -132,13 +132,17 @@ void SkeletalModel::drawSkeleton( )
     this->drawChildBones(m_rootJoint);
 }
 
+static float inline degToRad(float degrees) {
+    return 2 * M_PI * degrees / 360.0;
+}
+
 void SkeletalModel::setJointTransform(int jointIndex, float rX, float rY, float rZ)
 {
 	// Set the rotation part of the joint's transformation matrix based on the passed in Euler angles.
-    Matrix4f *transform = &m_joints[jointIndex]->transform;
+    Matrix4f *transform = &(m_joints[jointIndex]->transform);
     transform->rotateX(rX);
     transform->rotateY(rY);
-    transform->rotateZ(rZ);    
+    transform->rotateZ(rZ);
 }
 
 
