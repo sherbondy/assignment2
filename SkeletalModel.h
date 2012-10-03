@@ -82,6 +82,8 @@ private:
 	std::vector< Joint* > m_joints;
 
 	Mesh m_mesh;
+    
+    std::vector<Matrix4f> prev_joint_transforms;
 
 	MatrixStack m_matrixStack;
 };

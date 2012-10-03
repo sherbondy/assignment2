@@ -60,6 +60,7 @@ void SkeletalModel::loadSkeleton( const char* filename )
             joint->transform = translation;
             
             m_joints.push_back(joint);
+            prev_joint_transforms.push_back(Matrix4f::identity());
             if (parent == -1){
                 m_rootJoint = joint;
             } else {
@@ -137,10 +138,15 @@ void SkeletalModel::drawSkeleton( )
 void SkeletalModel::setJointTransform(int jointIndex, float rX, float rY, float rZ)
 {
 	// Set the rotation part of the joint's transformation matrix based on the passed in Euler angles.
-    Matrix4f *transform = &(m_joints[jointIndex]->transform);
-    transform->rotateX(rX);
-    transform->rotateY(rY);
-    transform->rotateZ(rZ);
+    Matrix4f transform  = m_joints[jointIndex]->transform;
+    Matrix4f new_rotation = Matrix4f::rotateX(rX) *
+                            Matrix4f::rotateY(rY) *
+                            Matrix4f::rotateZ(rZ);
+    
+    Matrix4f rotation = prev_joint_transforms[jointIndex].inverse() * new_rotation;
+    m_joints[jointIndex]->transform = rotation * transform;
+    
+    prev_joint_transforms[jointIndex] = new_rotation;
 }
 
 
