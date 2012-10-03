@@ -74,6 +74,7 @@ public:
 private:
     
     void drawChildJoints(Joint *joint);
+    void drawChildBones(Joint *joint);
 
 	// pointer to the root joint
 	Joint* m_rootJoint;

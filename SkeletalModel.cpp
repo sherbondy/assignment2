@@ -55,9 +55,7 @@ void SkeletalModel::loadSkeleton( const char* filename )
             ss >> dx >> dy >> dz >> parent;
             
             Joint *joint = new Joint();
-            Matrix4f translation = Matrix4f::identity();
-            Vector4f trans_vector = Vector4f(dx, dy, dz, 1.0);
-            translation.setCol(3, trans_vector);
+            Matrix4f translation = Matrix4f::translation(dx, dy, dz);
             joint->transform = translation;
             
             m_joints.push_back(joint);
@@ -75,7 +73,8 @@ void SkeletalModel::loadSkeleton( const char* filename )
 }
 
 /* Recursively draws the child joints of joint */
-void SkeletalModel::drawChildJoints(Joint *joint){
+void SkeletalModel::drawChildJoints(Joint *joint)
+{
     m_matrixStack.push(joint->transform);
     glLoadMatrixf(m_matrixStack.top());
     glutSolidSphere(0.025f, 12, 12);
@@ -90,22 +89,48 @@ void SkeletalModel::drawChildJoints(Joint *joint){
 
 void SkeletalModel::drawJoints( )
 {
-	// Draw a sphere at each joint. You will need to add a recursive helper function to traverse the joint hierarchy.
-	//
-	// We recommend using glutSolidSphere( 0.025f, 12, 12 )
-	// to draw a sphere of reasonable size.
-	//
-	// You are *not* permitted to use the OpenGL matrix stack commands
-	// (glPushMatrix, glPopMatrix, glMultMatrix).
-	// You should use your MatrixStack class
-	// and use glLoadMatrix() before your drawing call.
-    
     this->drawChildJoints(m_rootJoint);
+}
+
+void SkeletalModel::drawChildBones(Joint *joint)
+{
+//    m_matrixStack.push(joint->transform);
+//    Vector3f joint_pos = joint->transform.getCol(3).xyz();
+//    
+//    for (int i = 0; i < joint->children.size(); ++i){
+//        Joint *child = joint->children[i];
+//        Vector3f child_offset = child->transform.getCol(3).xyz();
+//        float child_distance = child_offset.abs();
+//        
+//        // push cube transformations
+//        Matrix4f translate = Matrix4f::translation(0, 0, 0.5); // translate up 0.5;
+//        Matrix4f scale     = Matrix4f::scaling(0.05, 0.05, child_distance);
+//        
+//        Vector3f parent_offset = (joint_pos - child_offset);
+//        Vector3f rotateZ   = parent_offset.normalized();
+//        Vector3f rotateY   = Vector3f::cross(rotateZ, Vector3f::RIGHT);
+//        Vector3f rotateX   = Vector3f::cross(rotateY, rotateZ);
+//        Matrix4f rotate    = Matrix4f(Vector4f(rotateX, 0),
+//                                      Vector4f(rotateY, 0),
+//                                      Vector4f(rotateZ, 0),
+//                                      Vector4f(0, 0, 0, 1));
+//        
+//        Matrix4f transformations = rotate * scale * translate;
+//        
+//        m_matrixStack.push(transformations);
+//        glLoadMatrixf(m_matrixStack.top());
+//        glutSolidCube(1.0f);
+//        m_matrixStack.pop();
+//        
+//        this->drawChildBones(child);
+//    }
+//    m_matrixStack.pop();
 }
 
 void SkeletalModel::drawSkeleton( )
 {
 	// Draw boxes between the joints. You will need to add a recursive helper function to traverse the joint hierarchy.
+    this->drawChildBones(m_rootJoint);
 }
 
 void SkeletalModel::setJointTransform(int jointIndex, float rX, float rY, float rZ)
