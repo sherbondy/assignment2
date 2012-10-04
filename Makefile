@@ -14,11 +14,11 @@ else
 INCFLAGS = -I /usr/include/GL
 INCFLAGS += -I /mit/6.837/public/include/vecmath
 
-LINKFLAGS = -lglut -lGL -lGLU
+LINKFLAGS = -lglut -lGL -lGLU $(shell fltk-config --ldflags)
 LINKFLAGS += -L /mit/6.837/public/lib -lvecmath
 endif
 
-LINKFLAGS += -lfltk -lfltk_gl
+LINKFLAGS += -L /usr/local/lib -lfltk -lfltk_gl
 
 CFLAGS    = -g
 CFLAGS    += -DSOLN
