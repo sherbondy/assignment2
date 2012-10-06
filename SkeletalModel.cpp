@@ -145,6 +145,7 @@ void SkeletalModel::setJointTransform(int jointIndex, float rX, float rY, float 
                             Matrix4f::rotateY(rY) *
                             Matrix4f::rotateZ(rZ);
     
+    // this is a hack! I'm accumulating error here.
     Matrix4f rotation = prev_joint_transforms[jointIndex].inverse() * new_rotation;
     m_joints[jointIndex]->transform = rotation * transform;
     
