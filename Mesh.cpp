@@ -1,5 +1,5 @@
 #include "Mesh.h"
-#define MAX_BUFFER_SIZE 1024
+#define MAX_BUFFER_SIZE 4096
 
 using namespace std;
 
@@ -72,4 +72,20 @@ void Mesh::loadAttachments( const char* filename, int numJoints )
 	// 2.2. Implement this method to load the per-vertex attachment weights
 	// this method should update m_mesh.attachments
     
+    ifstream attachfile(filename);
+    
+    char buffer[MAX_BUFFER_SIZE];
+    while (attachfile.getline(buffer, MAX_BUFFER_SIZE)){
+        stringstream ss(buffer); // a buffer corresponds to one line
+        
+        float tmpWeight;
+        vector<float> vertexWeights;
+        
+        while(ss.good()){
+            ss >> tmpWeight;
+            vertexWeights.push_back(tmpWeight);
+        }
+        
+        attachments.push_back(vertexWeights);
+    }    
 }
