@@ -110,6 +110,7 @@ void SkeletalModel::drawChildBones(Joint *joint)
         Matrix4f translate = Matrix4f::translation(0, 0, 0.5); // translate up 0.5;
         Matrix4f scale     = Matrix4f::scaling(0.05, 0.05, child_distance);
         
+        // z is the important rotation. The other two are somewhat arbitrary.
         Vector3f rotateZ   = child_offset.normalized();
         Vector3f rotateY   = Vector3f::cross(rotateZ, Vector3f::RIGHT).normalized();
         Vector3f rotateX   = Vector3f::cross(rotateY, rotateZ).normalized();
@@ -133,8 +134,6 @@ void SkeletalModel::drawChildBones(Joint *joint)
 
 void SkeletalModel::drawSkeleton( )
 {
-	// Draw boxes between the joints. You will need to add a recursive helper
-    // function to traverse the joint hierarchy.
     this->drawChildBones(m_rootJoint);
 }
 
