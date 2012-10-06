@@ -16,6 +16,7 @@
 #endif
 
 typedef tuple< unsigned, 3 > Tuple3u;
+typedef std::vector<Tuple3u> FaceVec;
 
 struct Mesh
 {
@@ -25,7 +26,7 @@ struct Mesh
 
 	// each face has 3 indices
 	// referencing 3 vertices
-	std::vector< Tuple3u > faces;
+	FaceVec faces;
 
 	// current vertex positions after animation
 	std::vector< Vector3f > currentVertices;

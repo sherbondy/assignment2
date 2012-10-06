@@ -6,8 +6,6 @@ using namespace std;
 void Mesh::load( const char* filename )
 {
 	// 2.1.1. load() should populate bindVertices, currentVertices, and faces
-
-	// Add your code here.
     ifstream meshfile(filename);
 
     char buffer[MAX_BUFFER_SIZE];
@@ -18,7 +16,7 @@ void Mesh::load( const char* filename )
         string s;
         unsigned tmp; // placeholder for face vertex indices.
         char slash;  // gobble up blank space
-        vector<unsigned> idx; // indices for faces
+        unsigned idx[3]; // indices for faces
         Tuple3u faceVertices; // populated by idx
         
         ss >> s; // put a token into s: indicates *v*ertex or *f*ace
@@ -26,12 +24,7 @@ void Mesh::load( const char* filename )
             ss >> v[0] >> v[1] >> v[2];
             bindVertices.push_back(v);
         } else if (s == "f") {
-            while (ss.good()) {
-                ss >> tmp;
-                ss >> slash;
-                idx.push_back(tmp);
-            }
-            
+            ss >> idx[0] >> idx[1] >> idx[2];
             faceVertices = Tuple3u(idx[0],idx[1],idx[2]);
             faces.push_back(faceVertices);
         }
@@ -48,6 +41,34 @@ void Mesh::draw()
 	// Notice that since we have per-triangle normals
 	// rather than the analytical normals from
 	// assignment 1, the appearance is "faceted".
+    // render from currentVertices, NOT bindVertices
+    
+    FaceVec::iterator iter = faces.begin();
+
+    while (iter != faces.end()){
+        Tuple3u idxes = *iter;
+        vector<Vector3f> faceVertices;
+        glBegin(GL_TRIANGLES);
+        
+        for (unsigned i = 0; i < 3; ++i){
+            // face vertices are 1-indexed in obj files
+            Vector3f vertex = currentVertices[idxes[i] - 1];
+            faceVertices.push_back(vertex);
+            glVertex3f(vertex[0], vertex[1], vertex[2]);
+        }
+        
+        // calculate normals on the fly
+        Vector3f u = faceVertices[1] - faceVertices[0];
+        Vector3f v = faceVertices[2] - faceVertices[0];
+        Vector3f normal = Vector3f::cross(u, v).normalized();
+        glNormal3f(normal[0], normal[1], normal[2]);
+        
+        glEnd();
+                
+        iter++;
+    }
+    
+    
 }
 
 void Mesh::loadAttachments( const char* filename, int numJoints )
