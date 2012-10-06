@@ -14,8 +14,6 @@ void Mesh::load( const char* filename )
         
         Vector3f v;
         string s;
-        unsigned tmp; // placeholder for face vertex indices.
-        char slash;  // gobble up blank space
         unsigned idx[3]; // indices for faces
         Tuple3u faceVertices; // populated by idx
         
@@ -44,6 +42,7 @@ void Mesh::draw()
     // render from currentVertices, NOT bindVertices
     
     FaceVec::iterator iter = faces.begin();
+    vector<Vector3f>normals;
 
     while (iter != faces.end()){
         Tuple3u idxes = *iter;
@@ -64,15 +63,13 @@ void Mesh::draw()
         glNormal3f(normal[0], normal[1], normal[2]);
         
         glEnd();
-                
         iter++;
     }
-    
-    
 }
 
 void Mesh::loadAttachments( const char* filename, int numJoints )
 {
 	// 2.2. Implement this method to load the per-vertex attachment weights
 	// this method should update m_mesh.attachments
+    
 }
