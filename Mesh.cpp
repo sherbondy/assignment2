@@ -81,8 +81,7 @@ void Mesh::loadAttachments( const char* filename, int numJoints )
         float tmpWeight;
         vector<float> vertexWeights;
         
-        while(ss.good()){
-            ss >> tmpWeight;
+        while(ss >> tmpWeight){
             vertexWeights.push_back(tmpWeight);
         }
         

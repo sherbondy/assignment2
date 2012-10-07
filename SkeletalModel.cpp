@@ -154,7 +154,7 @@ void SkeletalModel::computeBindWorldToJoint(Joint *joint)
     
     joint->bindWorldToJointTransform = m_matrixStack.top();
         
-    for (int i = 0; i < joint->children.size(); ++i){
+    for (int i = 0; i < joint->children.size(); i++){
         Joint *child = joint->children[i];
         this->computeBindWorldToJoint(child);
     }
@@ -183,7 +183,7 @@ void SkeletalModel::updateCurrentJointToWorld(Joint *joint)
     
     joint->currentJointToWorldTransform = m_matrixStack.top();
     
-    for (int i = 0; i < joint->children.size(); ++i){
+    for (int i = 0; i < joint->children.size(); i++){
         Joint *child = joint->children[i];
         this->updateCurrentJointToWorld(child);
     }
@@ -206,6 +206,7 @@ void SkeletalModel::updateCurrentJointToWorldTransforms()
     updateCurrentJointToWorld(m_rootJoint);
 }
 
+// neck is not neck, elbow and shoulder are backwards, left hand is severely messed up
 void SkeletalModel::updateMesh()
 {
 	// 2.3.2. This is the core of SSD.
@@ -224,13 +225,11 @@ void SkeletalModel::updateMesh()
             Joint *joint = m_joints[j];
             float weight = weights[j];
             
-            if (weight > 0) {
-                Vector4f contribution = joint->currentJointToWorldTransform *
-                                        joint->bindWorldToJointTransform.inverse() *
-                                        Vector4f(p, 1);
-                
-                pActive += weight * contribution.xyz();
-            }
+            Vector4f contribution = joint->currentJointToWorldTransform *
+                                    joint->bindWorldToJointTransform.inverse() *
+                                    Vector4f(p, 1);
+            
+            pActive += weight * contribution.xyz();
         }
         
         m_mesh.currentVertices[i] = pActive;
