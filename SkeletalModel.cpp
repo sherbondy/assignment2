@@ -46,7 +46,6 @@ void SkeletalModel::loadSkeleton( const char* filename )
 {
 	// Load the skeleton from file here.
     ifstream skelefile(filename);
-    string line;
     
     char buffer[MAX_BUFFER_SIZE];
     while (skelefile.getline(buffer, MAX_BUFFER_SIZE)){

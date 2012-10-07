@@ -44,6 +44,9 @@ void Mesh::draw()
     
     FaceVec::iterator iter = faces.begin();
     vector<Vector3f>normals;
+    
+    GLfloat modelColor[] = {0, 0.5, 0.5, 1.0};
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, modelColor);
 
     while (iter != faces.end()){
         Tuple3u idxes = *iter;
