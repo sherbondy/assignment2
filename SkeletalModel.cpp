@@ -60,9 +60,9 @@ void SkeletalModel::loadSkeleton( const char* filename )
                 Joint *joint = new Joint();
                 Matrix4f translation = Matrix4f::translation(dx, dy, dz);
                 joint->transform = translation;
-                
+                joint->rotation = Matrix4f::identity();
+
                 m_joints.push_back(joint);
-                prev_joint_transforms.push_back(Matrix4f::identity());
                 if (parent == -1){
                     m_rootJoint = joint;
                 } else {
@@ -80,7 +80,7 @@ void SkeletalModel::loadSkeleton( const char* filename )
 /* Recursively draws the child joints of joint */
 void SkeletalModel::drawChildJoints(Joint *joint)
 {
-    m_matrixStack.push(joint->transform);
+    m_matrixStack.push(joint->rotatedTransform());
     glLoadMatrixf(m_matrixStack.top());
     glutSolidSphere(0.025f, 12, 12);
     
@@ -99,11 +99,11 @@ void SkeletalModel::drawJoints( )
 
 void SkeletalModel::drawChildBones(Joint *joint)
 {
-    m_matrixStack.push(joint->transform);
+    m_matrixStack.push(joint->rotatedTransform());
     
     for (int i = 0; i < joint->children.size(); ++i){
         Joint *child = joint->children[i];
-        Vector3f child_offset = child->transform.getCol(3).xyz();
+        Vector3f child_offset = child->rotatedTransform().getCol(3).xyz();
         float child_distance = child_offset.abs();
         
         // push cube transformations
@@ -140,18 +140,27 @@ void SkeletalModel::drawSkeleton( )
 void SkeletalModel::setJointTransform(int jointIndex, float rX, float rY, float rZ)
 {
 	// Set the rotation part of the joint's transformation matrix based on the passed in Euler angles.
-    Matrix4f transform  = m_joints[jointIndex]->transform;
     Matrix4f new_rotation = Matrix4f::rotateX(rX) *
                             Matrix4f::rotateY(rY) *
                             Matrix4f::rotateZ(rZ);
     
-    // this is a hack! I'm accumulating error here.
-    Matrix4f rotation = prev_joint_transforms[jointIndex].inverse() * new_rotation;
-    m_joints[jointIndex]->transform = rotation * transform;
-    
-    prev_joint_transforms[jointIndex] = new_rotation;
+    m_joints[jointIndex]->rotation = new_rotation;
 }
 
+
+void SkeletalModel::computeBindWorldToJoint(Joint *joint)
+{
+    m_matrixStack.push(joint->transform.inverse());
+    
+    joint->bindWorldToJointTransform = m_matrixStack.top();
+        
+    for (int i = 0; i < joint->children.size(); ++i){
+        Joint *child = joint->children[i];
+        this->computeBindWorldToJoint(child);
+    }
+    
+    m_matrixStack.pop();
+}
 
 void SkeletalModel::computeBindWorldToJointTransforms()
 {
@@ -163,6 +172,23 @@ void SkeletalModel::computeBindWorldToJointTransforms()
 	//
 	// This method should update each joint's bindWorldToJointTransform.
 	// You will need to add a recursive helper function to traverse the joint hierarchy.
+
+    m_matrixStack.clear();
+    this->computeBindWorldToJoint(m_rootJoint);
+}
+
+void SkeletalModel::updateCurrentJointToWorld(Joint *joint)
+{
+    m_matrixStack.push(joint->rotatedTransform());
+    
+    joint->currentJointToWorldTransform = m_matrixStack.top();
+    
+    for (int i = 0; i < joint->children.size(); ++i){
+        Joint *child = joint->children[i];
+        this->updateCurrentJointToWorld(child);
+    }
+    
+    m_matrixStack.pop();
 }
 
 void SkeletalModel::updateCurrentJointToWorldTransforms()
@@ -173,8 +199,11 @@ void SkeletalModel::updateCurrentJointToWorldTransforms()
 	// The current pose is defined by the rotations you've applied to the
 	// joints and hence needs to be *updated* every time the joint angles change.
 	//
-	// This method should update each joint's bindWorldToJointTransform.
+	// This method should update each joint's currentJointToWorldTransform.
 	// You will need to add a recursive helper function to traverse the joint hierarchy.
+
+    m_matrixStack.clear();
+    updateCurrentJointToWorld(m_rootJoint);
 }
 
 void SkeletalModel::updateMesh()
@@ -184,5 +213,28 @@ void SkeletalModel::updateMesh()
 	// given the current state of the skeleton.
 	// You will need both the bind pose world --> joint transforms.
 	// and the current joint --> world transforms.
+    unsigned jointSize = (unsigned) m_joints.size();
+        
+    for (unsigned i = 0; i < m_mesh.bindVertices.size(); ++i) {
+        Vector3f p = m_mesh.bindVertices[i];
+        Vector3f pActive = Vector3f();
+        vector<float> weights = m_mesh.attachments[i];
+        
+        for (unsigned j = 0; j < jointSize; ++j) {
+            Joint *joint = m_joints[j];
+            float weight = weights[j];
+            
+            if (weight > 0) {
+                Vector4f contribution = joint->currentJointToWorldTransform *
+                                        joint->bindWorldToJointTransform.inverse() *
+                                        Vector4f(p, 1);
+                
+                pActive += weight * contribution.xyz();
+            }
+        }
+        
+        m_mesh.currentVertices[i] = pActive;
+    }
+    
 }
 

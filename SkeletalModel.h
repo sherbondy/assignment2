@@ -75,6 +75,8 @@ private:
     
     void drawChildJoints(Joint *joint);
     void drawChildBones(Joint *joint);
+    void computeBindWorldToJoint(Joint *joint);
+    void updateCurrentJointToWorld(Joint *joint);
 
 	// pointer to the root joint
 	Joint* m_rootJoint;
@@ -83,8 +85,6 @@ private:
 
 	Mesh m_mesh;
     
-    std::vector<Matrix4f> prev_joint_transforms;
-
 	MatrixStack m_matrixStack;
 };
 
