@@ -18,4 +18,13 @@ git submodule init && git submodule update
 
 Now, you should be able to call `make` as usual.
 
+To build on linux, you should be able to just do `make`, assuming FLTK is installed.
+
+I referred to Chapter 7 of Steven Gortler's book to learn more about Quaternions,
+although I haven't actually made use of them in my code.
+
+I haven't done any extra credit yet. I'll resubmit if I have enough time.
+
+Artifacts are located in the `artifacts` folder.
+
 Enjoy. [Email me](ethanis@mit.edu) if you run into any issues.
