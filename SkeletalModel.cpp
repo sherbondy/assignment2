@@ -150,7 +150,7 @@ void SkeletalModel::setJointTransform(int jointIndex, float rX, float rY, float 
 
 void SkeletalModel::computeBindWorldToJoint(Joint *joint)
 {
-    m_matrixStack.push(joint->transform.inverse());
+    m_matrixStack.push(joint->transform);
     
     joint->bindWorldToJointTransform = m_matrixStack.top();
         
