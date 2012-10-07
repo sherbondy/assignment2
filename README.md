@@ -18,7 +18,17 @@ git submodule init && git submodule update
 
 Now, you should be able to call `make` as usual.
 
-To build on linux, you should be able to just do `make`, assuming FLTK is installed.
+To build on Linux, you should be able to just do `make`, assuming FLTK is installed.
+
+If you need to install FLTK, try the following:
+```
+wget http://ftp.easysw.com/pub/fltk/1.3.0/fltk-1.3.0-source.tar.gz
+tar -xzvf fltk-1.3.0-source.tar.gz
+cd fltk-1.3.0
+./configure
+make
+sudo make install
+```
 
 I referred to Chapter 7 of Steven Gortler's book to learn more about Quaternions,
 although I haven't actually made use of them in my code.
