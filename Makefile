@@ -10,15 +10,14 @@ FRAMEWORKS += -framework AGL
 FRAMEWORKS += -framework Carbon
 
 LINKFLAGS += -L vecmath/lib/ -lvecmath
+LINKFLAGS += -lfltk -lfltk_gl
 else
 INCFLAGS = -I /usr/include/GL
 INCFLAGS += -I /mit/6.837/public/include/vecmath
 
-LINKFLAGS = -lglut -lGL -lGLU
+LINKFLAGS = -lglut $(shell fltk-config --use-gl --ldflags)
 LINKFLAGS += -L /mit/6.837/public/lib -lvecmath
 endif
-
-LINKFLAGS += -lfltk -lfltk_gl
 
 CFLAGS    = -g
 CFLAGS    += -DSOLN
