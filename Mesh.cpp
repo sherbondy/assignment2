@@ -27,6 +27,7 @@ void Mesh::load( const char* filename )
             faces.push_back(faceVertices);
         }
     }
+    meshfile.close();
     
 	// make a copy of the bind vertices as the current vertices
 	currentVertices = bindVertices;
@@ -86,5 +87,6 @@ void Mesh::loadAttachments( const char* filename, int numJoints )
         }
         
         attachments.push_back(vertexWeights);
-    }    
+    }
+    attachfile.close();
 }

@@ -2,6 +2,8 @@
 
 #include <FL/Fl.H>
 
+#define MAX_BUFFER_SIZE 4096
+
 using namespace std;
 
 void SkeletalModel::load(const char *skeletonFile, const char *meshFile, const char *attachmentsFile)
@@ -46,35 +48,27 @@ void SkeletalModel::loadSkeleton( const char* filename )
     ifstream skelefile(filename);
     string line;
     
-    if (skelefile.is_open()){
-        while (skelefile.good()) {
-            getline(skelefile, line);
-            
-            if (!line.empty()) {
-                stringstream ss(line);
-                
-                float dx, dy, dz;
-                int parent;
-                ss >> dx >> dy >> dz >> parent;
-                
-                Joint *joint = new Joint();
-                Matrix4f translation = Matrix4f::translation(dx, dy, dz);
-                joint->transform = translation;
-                joint->rotation = Matrix4f::identity();
+    char buffer[MAX_BUFFER_SIZE];
+    while (skelefile.getline(buffer, MAX_BUFFER_SIZE)){
+        stringstream ss(buffer); // a buffer corresponds to one line
+                            
+        float dx, dy, dz;
+        int parent;
+        ss >> dx >> dy >> dz >> parent;
+        
+        Joint *joint = new Joint();
+        Matrix4f translation = Matrix4f::translation(dx, dy, dz);
+        joint->transform = translation;
+        joint->rotation = Matrix4f::identity();
 
-                m_joints.push_back(joint);
-                if (parent == -1){
-                    m_rootJoint = joint;
-                } else {
-                    m_joints[parent]->children.push_back(joint);
-                }
-            }
+        m_joints.push_back(joint);
+        if (parent == -1){
+            m_rootJoint = joint;
+        } else {
+            m_joints[parent]->children.push_back(joint);
         }
-
-        skelefile.close();
-    } else {        
-        cout << "Unable to open file " << filename;
     }
+    skelefile.close();
 }
 
 /* Recursively draws the child joints of joint */
@@ -139,7 +133,8 @@ void SkeletalModel::drawSkeleton( )
 
 void SkeletalModel::setJointTransform(int jointIndex, float rX, float rY, float rZ)
 {
-	// Set the rotation part of the joint's transformation matrix based on the passed in Euler angles.
+	// Set the rotation part of the joint's transformation matrix
+    // based on the passed in Euler angles.
     Matrix4f new_rotation = Matrix4f::rotateX(rX) *
                             Matrix4f::rotateY(rY) *
                             Matrix4f::rotateZ(rZ);
@@ -148,13 +143,15 @@ void SkeletalModel::setJointTransform(int jointIndex, float rX, float rY, float 
 }
 
 
+// recursive helper function for B
 void SkeletalModel::computeBindWorldToJoint(Joint *joint)
 {
-    m_matrixStack.push(joint->transform);
+    Matrix4f B_inv = joint->rotatedTransform().inverse();
+    m_matrixStack.push(B_inv);
     
     joint->bindWorldToJointTransform = m_matrixStack.top();
         
-    for (int i = 0; i < joint->children.size(); i++){
+    for (unsigned i = 0; i < joint->children.size(); i++){
         Joint *child = joint->children[i];
         this->computeBindWorldToJoint(child);
     }
@@ -164,9 +161,6 @@ void SkeletalModel::computeBindWorldToJoint(Joint *joint)
 
 void SkeletalModel::computeBindWorldToJointTransforms()
 {
-	// 2.3.1. Implement this method to compute a per-joint transform from
-	// world-space to joint space in the BIND POSE.
-	//
 	// Note that this needs to be computed only once since there is only
 	// a single bind pose.
 	//
@@ -177,13 +171,14 @@ void SkeletalModel::computeBindWorldToJointTransforms()
     this->computeBindWorldToJoint(m_rootJoint);
 }
 
+// recursive helper function for T
 void SkeletalModel::updateCurrentJointToWorld(Joint *joint)
 {
     m_matrixStack.push(joint->rotatedTransform());
     
     joint->currentJointToWorldTransform = m_matrixStack.top();
     
-    for (int i = 0; i < joint->children.size(); i++){
+    for (unsigned i = 0; i < joint->children.size(); i++){
         Joint *child = joint->children[i];
         this->updateCurrentJointToWorld(child);
     }
@@ -193,9 +188,6 @@ void SkeletalModel::updateCurrentJointToWorld(Joint *joint)
 
 void SkeletalModel::updateCurrentJointToWorldTransforms()
 {
-	// 2.3.2. Implement this method to compute a per-joint transform from
-	// joint space to world space in the CURRENT POSE.
-	//
 	// The current pose is defined by the rotations you've applied to the
 	// joints and hence needs to be *updated* every time the joint angles change.
 	//
@@ -206,7 +198,6 @@ void SkeletalModel::updateCurrentJointToWorldTransforms()
     updateCurrentJointToWorld(m_rootJoint);
 }
 
-// neck is not neck, elbow and shoulder are backwards, left hand is severely messed up
 void SkeletalModel::updateMesh()
 {
 	// 2.3.2. This is the core of SSD.
@@ -215,8 +206,9 @@ void SkeletalModel::updateMesh()
 	// You will need both the bind pose world --> joint transforms.
 	// and the current joint --> world transforms.
     unsigned jointSize = (unsigned) m_joints.size();
+    unsigned long vertexCount = m_mesh.bindVertices.size();
         
-    for (unsigned i = 0; i < m_mesh.bindVertices.size(); ++i) {
+    for (unsigned long i = 0; i < vertexCount; ++i) {
         Vector3f p = m_mesh.bindVertices[i];
         Vector3f pActive = Vector3f();
         vector<float> weights = m_mesh.attachments[i];
@@ -225,15 +217,18 @@ void SkeletalModel::updateMesh()
             Joint *joint = m_joints[j];
             float weight = weights[j];
             
-            Vector4f contribution = joint->currentJointToWorldTransform *
-                                    joint->bindWorldToJointTransform.inverse() *
-                                    Vector4f(p, 1);
-            
-            pActive += weight * contribution.xyz();
+            // note: bindWorldToJointTransform is actually B^-1 since that's
+            // all we actually make use of here.
+            if (weight > 0) {
+                Vector4f contribution = joint->currentJointToWorldTransform *
+                                        joint->bindWorldToJointTransform *
+                                        Vector4f(p, 1);
+                
+                pActive += weight * contribution.xyz();
+            }
         }
         
         m_mesh.currentVertices[i] = pActive;
-    }
-    
+    }    
 }
 
