@@ -143,6 +143,7 @@ void SkeletalModel::setJointTransform(int jointIndex, float rX, float rY, float 
 
 
 // recursive helper function for B
+// SOMETHING MUST BE WRONG HERE. Would explain why mappings are off. (neck, feet)
 void SkeletalModel::computeBindWorldToJoint(Joint *joint)
 {
     Matrix4f B_inv = joint->transform.inverse();
