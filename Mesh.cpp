@@ -48,10 +48,10 @@ void Mesh::draw()
     GLfloat modelColor[] = {0, 0.5, 0.5, 1.0};
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, modelColor);
 
+    glBegin(GL_TRIANGLES);
     while (iter != faces.end()){
         Tuple3u idxes = *iter;
         vector<Vector3f> faceVertices;
-        glBegin(GL_TRIANGLES);
         
         for (unsigned i = 0; i < 3; ++i){
             // face vertices are 1-indexed in obj files
@@ -64,11 +64,10 @@ void Mesh::draw()
         Vector3f u = faceVertices[1] - faceVertices[0];
         Vector3f v = faceVertices[2] - faceVertices[0];
         Vector3f normal = Vector3f::cross(u, v).normalized();
-        glNormal3f(normal[0], normal[1], normal[2]);
-        
-        glEnd();
+        glNormal3f(normal[0], normal[1], normal[2]);        
         iter++;
     }
+    glEnd();
 }
 
 void Mesh::loadAttachments( const char* filename, int numJoints )

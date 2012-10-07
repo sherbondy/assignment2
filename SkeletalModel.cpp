@@ -145,7 +145,7 @@ void SkeletalModel::setJointTransform(int jointIndex, float rX, float rY, float 
 // recursive helper function for B
 void SkeletalModel::computeBindWorldToJoint(Joint *joint)
 {
-    Matrix4f B_inv = joint->rotatedTransform().inverse();
+    Matrix4f B_inv = joint->transform.inverse();
     m_matrixStack.push(B_inv);
     
     joint->bindWorldToJointTransform = m_matrixStack.top();
