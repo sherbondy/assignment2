@@ -204,18 +204,18 @@ void SkeletalModel::updateMesh()
     unsigned jointSize = (unsigned) m_joints.size();
     unsigned long vertexCount = m_mesh.bindVertices.size();
         
-    for (unsigned long i = 0; i < vertexCount; ++i) {
+    for (unsigned long i = 0; i < vertexCount; ++i){
         Vector3f p = m_mesh.bindVertices[i];
         Vector3f pActive = Vector3f();
         vector<float> weights = m_mesh.attachments[i];
         
-        for (unsigned j = 0; j < jointSize; ++j) {
+        for (unsigned j = 0; j < jointSize; ++j){
             Joint *joint = m_joints[j];
             float weight = weights[j];
             
             // note: bindWorldToJointTransform is actually B^-1 since that's
-            // all we actually make use of here.
-            if (weight > 0) {
+            // all we make use of here.
+            if (weight > 0){
                 Vector4f contribution = joint->currentJointToWorldTransform *
                                         joint->bindWorldToJointTransform *
                                         Vector4f(p, 1);
