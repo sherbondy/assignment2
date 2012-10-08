@@ -25,14 +25,10 @@ void SkeletalModel::draw(Matrix4f cameraMatrix, bool skeletonVisible)
 	m_matrixStack.clear();
 	m_matrixStack.push(cameraMatrix);
 
-	if( skeletonVisible )
-	{
+	if (skeletonVisible) {
 		drawJoints();
-
 		drawSkeleton();
-	}
-	else
-	{
+	} else {
 		// Clear out any weird matrix we may have been using for drawing
         // the bones and revert to the camera matrix.
 		glLoadMatrixf(m_matrixStack.top());
@@ -147,7 +143,7 @@ void SkeletalModel::setJointTransform(int jointIndex, float rX, float rY, float 
 void SkeletalModel::computeBindWorldToJoint(Joint *joint)
 {
     Matrix4f B_inv = joint->transform.inverse();
-    m_matrixStack.push(B_inv);
+    m_matrixStack.lpush(B_inv);
     
     joint->bindWorldToJointTransform = m_matrixStack.top();
         

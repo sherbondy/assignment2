@@ -11,7 +11,9 @@ public:
 	void clear();
 	Matrix4f top();
 	void push( const Matrix4f& m );
+    void lpush( const Matrix4f& m);
 	void pop();
+
 
 private:
     void add_identity();

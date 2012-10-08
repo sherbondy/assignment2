@@ -33,6 +33,13 @@ void MatrixStack::push( const Matrix4f& m )
     m_matrices.push_back(product);
 }
 
+void MatrixStack::lpush( const Matrix4f& m)
+{
+    // push m onto the stack, but multiply on the left hand side.
+    Matrix4f product = m * this->top();
+    m_matrices.push_back(product);
+}
+
 void MatrixStack::pop()
 {
 	// Remove the top element from the stack
