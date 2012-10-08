@@ -38,6 +38,10 @@ although I haven't actually made use of them in my code.
 I haven't done any extra credit yet. I'll resubmit if I have enough time.
 
 Occasionally the model flickers or resizes suddenly. I'm not sure what's causing this.
+Also, there's something seriously wrong with my SSD: some joints seem to manipulate properly, eg: hip
+and arms, whereas others like neck and foot exhibit very strange behavior. I've yet to track down
+the origin of this issue. Hopefully I'll have a chance to reinvestigate and resubmit later in the week.
+Submitting now just to be cautious.
 
 Artifacts are located in the `artifacts` folder.
 
