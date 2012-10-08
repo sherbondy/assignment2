@@ -191,7 +191,7 @@ void SkeletalModel::updateCurrentJointToWorldTransforms()
 	// You will need to add a recursive helper function to traverse the joint hierarchy.
 
     m_matrixStack.clear();
-    updateCurrentJointToWorld(m_rootJoint);
+    this->updateCurrentJointToWorld(m_rootJoint);
 }
 
 void SkeletalModel::updateMesh()
