@@ -216,22 +216,6 @@
 		};
 /* End PBXHeadersBuildPhase section */
 
-/* Begin PBXLegacyTarget section */
-		3E310E80161B93520030A1B9 /* two */ = {
-			isa = PBXLegacyTarget;
-			buildArgumentsString = "$(ACTION)";
-			buildConfigurationList = 3E310E83161B93520030A1B9 /* Build configuration list for PBXLegacyTarget "two" */;
-			buildPhases = (
-			);
-			buildToolPath = /usr/bin/make;
-			dependencies = (
-			);
-			name = two;
-			passBuildSettingsInEnvironment = 1;
-			productName = two;
-		};
-/* End PBXLegacyTarget section */
-
 /* Begin PBXNativeTarget section */
 		3E310EDB161B947C0030A1B9 /* a2 */ = {
 			isa = PBXNativeTarget;
@@ -279,7 +263,6 @@
 			);
 			projectRoot = "";
 			targets = (
-				3E310E80161B93520030A1B9 /* two */,
 				3E310EDB161B947C0030A1B9 /* a2 */,
 			);
 		};
@@ -365,27 +348,6 @@
 			};
 			name = Release;
 		};
-		3E310E84161B93520030A1B9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEBUGGING_SYMBOLS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		3E310E85161B93520030A1B9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		3E310EE1161B947C0030A1B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -436,15 +398,6 @@
 			buildConfigurations = (
 				3E310E81161B93520030A1B9 /* Debug */,
 				3E310E82161B93520030A1B9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3E310E83161B93520030A1B9 /* Build configuration list for PBXLegacyTarget "two" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3E310E84161B93520030A1B9 /* Debug */,
-				3E310E85161B93520030A1B9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
