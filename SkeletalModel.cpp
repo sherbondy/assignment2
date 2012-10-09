@@ -54,7 +54,6 @@ void SkeletalModel::loadSkeleton( const char* filename )
         Joint *joint = new Joint();
         Matrix4f translation = Matrix4f::translation(dx, dy, dz);
         joint->transform = translation;
-        joint->rotation = Matrix4f::identity();
 
         m_joints.push_back(joint);
         if (parent == -1){
@@ -69,7 +68,7 @@ void SkeletalModel::loadSkeleton( const char* filename )
 /* Recursively draws the child joints of joint */
 void SkeletalModel::drawChildJoints(Joint *joint)
 {
-    m_matrixStack.push(joint->rotatedTransform());
+    m_matrixStack.push(joint->transform);
     glLoadMatrixf(m_matrixStack.top());
     glutSolidSphere(0.025f, 12, 12);
     
@@ -88,11 +87,11 @@ void SkeletalModel::drawJoints( )
 
 void SkeletalModel::drawChildBones(Joint *joint)
 {
-    m_matrixStack.push(joint->rotatedTransform());
+    m_matrixStack.push(joint->transform);
     
     for (int i = 0; i < joint->children.size(); ++i){
         Joint *child = joint->children[i];
-        Vector3f child_offset = child->rotatedTransform().getCol(3).xyz();
+        Vector3f child_offset = child->transform.getCol(3).xyz();
         float child_distance = child_offset.abs();
         
         // push cube transformations
@@ -134,7 +133,13 @@ void SkeletalModel::setJointTransform(int jointIndex, float rX, float rY, float 
                             Matrix4f::rotateY(rY) *
                             Matrix4f::rotateZ(rZ);
     
-    m_joints[jointIndex]->rotation = new_rotation;
+    Matrix4f old_transform = m_joints[jointIndex]->transform;
+    Matrix4f new_transform = Matrix4f(new_rotation.getCol(0),
+                                      new_rotation.getCol(1),
+                                      new_rotation.getCol(2),
+                                      old_transform.getCol(3));
+    
+    m_joints[jointIndex]->transform = new_transform;
 }
 
 
@@ -170,7 +175,7 @@ void SkeletalModel::computeBindWorldToJointTransforms()
 // recursive helper function for T
 void SkeletalModel::updateCurrentJointToWorld(Joint *joint)
 {
-    m_matrixStack.push(joint->rotatedTransform());
+    m_matrixStack.push(joint->transform);
     
     joint->currentJointToWorldTransform = m_matrixStack.top();
     
