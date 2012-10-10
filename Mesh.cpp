@@ -51,20 +51,26 @@ void Mesh::draw()
     glBegin(GL_TRIANGLES);
     while (iter != faces.end()){
         Tuple3u idxes = *iter;
-        vector<Vector3f> faceVertices;
+        Vector3f faceVertices[3];
         
         for (unsigned i = 0; i < 3; ++i){
             // face vertices are 1-indexed in obj files
             Vector3f vertex = currentVertices[idxes[i] - 1];
-            faceVertices.push_back(vertex);
-            glVertex3f(vertex[0], vertex[1], vertex[2]);
+            faceVertices[i] = vertex;
         }
         
         // calculate normals on the fly
         Vector3f u = faceVertices[1] - faceVertices[0];
         Vector3f v = faceVertices[2] - faceVertices[0];
         Vector3f normal = Vector3f::cross(u, v).normalized();
-        glNormal3f(normal[0], normal[1], normal[2]);        
+        // make sure to draw the normal first!
+        glNormal3f(normal[0], normal[1], normal[2]);
+        
+        for (unsigned i = 0; i < 3; ++i){
+            Vector3f vertex = faceVertices[i];
+            glVertex3f(vertex[0], vertex[1], vertex[2]);
+        }
+
         iter++;
     }
     glEnd();
