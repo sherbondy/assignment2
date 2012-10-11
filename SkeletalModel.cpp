@@ -214,9 +214,9 @@ void SkeletalModel::updateMesh()
         Vector3f pActive = Vector3f();
         vector<float> weights = m_mesh.attachments[i];
         
-        for (unsigned j = 0; j < jointSize; ++j){
+        for (unsigned j = 1; j < jointSize; ++j){
             Joint *joint = m_joints[j];
-            float weight = weights[j];
+            float weight = weights[j-1];
             
             // note: bindWorldToJointTransform is actually B^-1 since that's
             // all we make use of here.
