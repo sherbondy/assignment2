@@ -214,6 +214,7 @@ void SkeletalModel::updateMesh()
         Vector3f pActive = Vector3f();
         vector<float> weights = m_mesh.attachments[i];
         
+        // ignore the root joint
         for (unsigned j = 1; j < jointSize; ++j){
             Joint *joint = m_joints[j];
             float weight = weights[j-1];
